@@ -5,7 +5,10 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 // var flash = require('express-flash');
 var app = express();
-var sequelize = require('./db');
+// var sequelize = require('./db');
+var systemRoutes = require('./routes/system');
+// var models = require('./models/models');
+var db = require('./db');
 
 app.set('port', 8000);
 app.engine('handlebars', handlebars.engine);
@@ -19,19 +22,23 @@ app.use(session({
 }));
 
 app.get('/', function(req, res){
-    sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection working');
-    }) 
-    .catch(err => {
-        console.log("ERROR: " + err);
+    db.cost.findAll({
+    }).then(function(s){
+        console.log(s);
+        res.render('home');  
+    }, function(e){
+        console.log(e);
+        res.render('home');
     });
-    res.render('home');
 });
 
+app.use('/system', systemRoutes);
 
-app.listen(app.get('port'), function(){
-    console.log("Server started on port " + app.get('port'));
-    console.log("Press Ctrl-C to terminate");
+db.sequelize.sync({
+	force: true
+}).then(function() {
+	app.listen(app.get('port'), function(){
+        console.log("Server started on port " + app.get('port'));
+        console.log("Press Ctrl-C to terminate");
+    });
 });
