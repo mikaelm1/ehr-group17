@@ -7,6 +7,7 @@ var session = require('express-session');
 var app = express();
 // var sequelize = require('./db');
 var systemRoutes = require('./routes/system');
+var providerRoutes = require('./routes/provider');
 // var models = require('./models/models');
 var db = require('./db');
 
@@ -22,7 +23,7 @@ app.use(session({
 }));
 
 app.get('/', function(req, res){
-    db.cost.findAll({
+    db.patient.findAll({
     }).then(function(s){
         console.log(s);
         res.render('home');  
@@ -33,6 +34,7 @@ app.get('/', function(req, res){
 });
 
 app.use('/system', systemRoutes);
+app.use('/provider', providerRoutes);
 
 db.sequelize.sync({
 	force: true

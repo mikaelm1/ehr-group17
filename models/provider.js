@@ -11,6 +11,14 @@ module.exports = function(sequelize, DataTypes) {
         employer: {
             type: DataTypes.STRING,
         },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     });
     return providers;
 };
