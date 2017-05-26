@@ -1,5 +1,24 @@
 var Sequelize = require("sequelize");
+var path = require("path");
+var env = process.env.NODE_ENV || "development";
+console.log(env);
 
+if (env === "development") {
+    var sequelize = new Sequelize('devdb', 'dev', 'devpwd', {
+        dialect: 'sqlite',
+        pool: {
+            max: 5,
+            min: 0,
+            idle: 10000
+        },
+        storage: 'devdb.sqlite'
+    });
+} else {
+    var sequelize = new Sequelize('testdb', 'test', 'testpwd', {
+        dialect: 'sqlite',
+        storage: ':memory:'
+    });
+}
 var sequelize = new Sequelize('devdb', 'dev', 'devpwd', {
   dialect: 'sqlite',
   pool: {
