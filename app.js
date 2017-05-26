@@ -24,12 +24,13 @@ app.use(session({
 
 app.get('/', function(req, res){
     db.patient.findAll({
-    }).then(function(s){
-        console.log(s);
-        res.render('home');  
-    }, function(e){
-        console.log(e);
-        res.render('home');
+        }).then(function(s){
+            // console.log(s);
+            res.render('home');  
+        }, function(e){
+            console.log(e);
+            res.status(500);
+            res.render('home');
     });
 });
 
@@ -44,3 +45,5 @@ db.sequelize.sync({
         console.log("Press Ctrl-C to terminate");
     });
 });
+
+module.exports = app;

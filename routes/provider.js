@@ -17,12 +17,16 @@ router.post('/register', function(req, res){
     provider.lastName = req.body.last;
     provider.password = req.body.password;
     provider.employer = req.body.employer;
+    
     db.provider.create(provider).then(function(p){
         // console.log(p);
         res.redirect('/');
     }, function(err){
         console.log(err);
-        res.redirect('/provider/register');
+        // res.redirect('/provider/register');
+        res.type('plain/text');
+        res.status(500);
+        res.send('500 - Server error');
     })
     // res.render('provider/register');
 });

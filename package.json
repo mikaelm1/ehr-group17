@@ -4,7 +4,8 @@
   "description": "Web app for a centralized EHR system",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "npm run test-unit",
+    "test-unit": "cross-env NODE_ENV=test ./node_modules/.bin/mocha test/*.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +20,13 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
+    "cross-env": "^5.0.0",
     "express": "^4.15.3",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.3",
     "mocha": "^3.4.2",
     "sequelize": "^3.30.4",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.8",
+    "supertest": "^3.0.0"
   }
 }
