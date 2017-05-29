@@ -23,15 +23,10 @@ app.use(session({
 }));
 
 app.get('/', function(req, res){
-    db.patient.findAll({
-        }).then(function(s){
-            // console.log(s);
-            res.render('home');  
-        }, function(e){
-            console.log(e);
-            res.status(500);
-            res.render('home');
-    });
+    if (req.session.providerID) {
+        res.locals.providerID = req.session.providerID;
+    }
+    res.render('home');
 });
 
 app.use('/system', systemRoutes);
