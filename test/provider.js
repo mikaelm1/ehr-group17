@@ -1,9 +1,10 @@
 var request = require('supertest');
 var app = require('../app');
+var db = require('../db');
 
 describe('GET /', function(){
     before(function () {
-        return require('../db').sequelize.sync();
+        return db.sequelize.sync();
     });
     it('respond with json', function(done){
         request(app)
@@ -47,15 +48,15 @@ describe('GET /', function(){
     describe('POST /provide/register', function(){
         it('respond with password error', function(done){
             request(app)
-                .post('/provider/register')
-                .send({email: 'example@yahoo.com'})
-                .expect(400)
-                .expect(/Password required/)
-                .end(function(err, res){
-                    if (err) return done(err);
-                    done();
-                });
-        });
+                    .post('/provider/register')
+                    .send({email: 'example@yahoo.com'})
+                    .expect(400)
+                    .expect(/Password required/)
+                    .end(function(err, res){
+                        if (err) return done(err);
+                        done();
+                    });
+            });
     });
 
     describe('POST /provide/register', function(){
@@ -77,6 +78,30 @@ describe('GET /', function(){
                 .post('/provider/register')
                 .send({email: 'kjrn@yahoo.com', password: 'wkrjge', first: 'bob', last: 'smith', employer: 'abc'})
                 .expect(302)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    describe('GET /provide/login', function(){
+        it('respond without error', function(done){
+            request(app)
+                .get('/provider/login')
+                .expect(200)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    describe('POST /provide/login', function(){
+        it('respond without error', function(done){
+            request(app)
+                .post('/provider/login')
+                .expect(400)
                 .end(function(err, res){
                     if (err) return done(err);
                     done();

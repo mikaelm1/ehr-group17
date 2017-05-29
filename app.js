@@ -32,13 +32,18 @@ app.get('/', function(req, res){
 app.use('/system', systemRoutes);
 app.use('/provider', providerRoutes);
 
-db.sequelize.sync({
-	force: true
-}).then(function() {
-	app.listen(app.get('port'), function(){
-        console.log("Server started on port " + app.get('port'));
-        console.log("Press Ctrl-C to terminate");
-    });
+// db.sequelize.sync({
+// 	force: true
+// }).then(function() {
+// 	app.listen(app.get('port'), function(){
+//         console.log("Server started on port " + app.get('port'));
+//         console.log("Press Ctrl-C to terminate");
+//     });
+// });
+
+app.listen(app.get('port'), function(){
+    console.log("Server started on port " + app.get('port'));
+    console.log("Press Ctrl-C to terminate");
 });
 
 module.exports = app;
