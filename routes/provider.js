@@ -25,7 +25,7 @@ router.post('/login', function(req, res){
     }
     if (valid === false) {
         res.status(400)
-        res.render('provider/login');   
+        res.render('provider/login');
     } else {
         db.provider.findOne({
             where: {
@@ -64,7 +64,7 @@ router.post('/register', function(req, res){
     if (provider.firstName ===  "" || provider.firstName === undefined) {
         valid = false;
         msg += "First name required.\n";
-    } 
+    }
     if (provider.lastName === "" || provider.lastName === undefined) {
         valid = false;
         msg += "Last name required\n";
@@ -94,8 +94,12 @@ router.post('/register', function(req, res){
             res.status(500);
             res.send('500 - Server error');
         })
-    }    
+    }
 });
+
+router.get('/profile', function(req, res) {
+  res.render('provider/profile');
+})
 
 
 module.exports = router;

@@ -41,6 +41,7 @@ app.use('/provider', providerRoutes);
 //     });
 // });
 
+
 app.listen(app.get('port'), function(){
     console.log("Server started on port " + app.get('port'));
     console.log("Press Ctrl-C to terminate");
