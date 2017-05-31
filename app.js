@@ -32,19 +32,31 @@ app.get('/', function(req, res){
 app.use('/system', systemRoutes);
 app.use('/provider', providerRoutes);
 
-// db.sequelize.sync({
-// 	force: true
-// }).then(function() {
-// 	app.listen(app.get('port'), function(){
-//         console.log("Server started on port " + app.get('port'));
-//         console.log("Press Ctrl-C to terminate");
-//     });
-// });
-
-
-app.listen(app.get('port'), function(){
-    console.log("Server started on port " + app.get('port'));
-    console.log("Press Ctrl-C to terminate");
+db.sequelize.sync({
+	force: true
+}).then(function() {
+    var p = {
+        email: 'admin@example.com',
+        firstName: 'admin',
+        lastName: 'bossman',
+        password: 'pass',
+        employer: 'acme'
+    }
+	app.listen(app.get('port'), function(){
+        db.provider.create(p).then(function(p){
+            console.log('admin created');
+        }, function(err){
+            console.log(err);
+        })
+        console.log("Server started on port " + app.get('port'));
+        console.log("Press Ctrl-C to terminate");
+    });
 });
+
+
+// app.listen(app.get('port'), function(){
+//     console.log("Server started on port " + app.get('port'));
+//     console.log("Press Ctrl-C to terminate");
+// });
 
 module.exports = app;
