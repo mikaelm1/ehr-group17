@@ -76,7 +76,7 @@ describe('GET /', function(){
         it('respond without error', function(done){
             request(app)
                 .post('/provider/register')
-                .send({email: 'kjrn@yahoo.com', password: 'wkrjge', first: 'bob', last: 'smith', employer: 'abc'})
+                .send({email: 'example@yahoo.com', password: 'pass', first: 'bob', last: 'smith', employer: 'abc'})
                 .expect(302)
                 .end(function(err, res){
                     if (err) return done(err);
@@ -102,6 +102,19 @@ describe('GET /', function(){
             request(app)
                 .post('/provider/login')
                 .expect(400)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    describe('POST /provide/login', function(){
+        it('respond without error', function(done){
+            request(app)
+                .post('/provider/login')
+                .send({email: 'example@yahoo.com', password: 'pass'})
+                .expect(302)
                 .end(function(err, res){
                     if (err) return done(err);
                     done();
