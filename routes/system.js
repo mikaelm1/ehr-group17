@@ -23,22 +23,26 @@ router.post('/new-ehr', auth, function(req, res) {
   var newEhrObject = {};
   newEhrObject.name = req.body.systemname;
   newEhrObject.cost = req.body.ehrcost;
-  console.log(req.session);
-  db.provider.findOne({'where': {id: req.session.providerID}}.then(function(user) {
+  // console.log(req.session);
+  db.provider.findOne({
+    where: {
+      id: req.session.providerID,
+    }
+  }).then(function(user) {
+    // console.log('found user: ' + user.id);
     db.system.create(newEhrObject).then(function(p){
-      user.addSystem(p).then(function() {
+      // console.log('First create: ' + p);
+      return p.setProvider(user).then(function() {
         return p.reload();
       }).then(function(p) {
-        res.redirect('/system/profile');
+        res.redirect('/provider/profile');
       })
     }, function(err){
         console.log(err);
-        res.type('application/json');
         res.status(500);
-        res.send('500 - Server error');
+        res.render('system/new-ehr');
     })
-  }));
-
+  });
 });
 
 
