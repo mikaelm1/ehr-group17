@@ -19,6 +19,10 @@ router.get('/new-ehr', auth,  function(req, res) {
   res.render('system/new-ehr');
 });
 
+router.get('/search-ehr', auth,  function(req, res) {
+  res.render('system/search-ehr');
+});
+
 router.post('/new-ehr', auth, function(req, res) {
   var newEhrObject = {};
   newEhrObject.name = req.body.systemname;
@@ -35,7 +39,7 @@ router.post('/new-ehr', auth, function(req, res) {
       return p.setProvider(user).then(function() {
         return p.reload();
       }).then(function(p) {
-        res.redirect('/provider/profile');
+        res.redirect('/');
       })
     }, function(err){
         console.log(err);
@@ -44,6 +48,42 @@ router.post('/new-ehr', auth, function(req, res) {
     })
   });
 });
+
+router.post('/search-ehr', auth, function(req, res) {
+  var ehrObject = {};
+  ehrObject.name = req.body.systemname;
+  ehrObject.cost = req.body.ehrcost;
+  // console.log(req.session);
+  db.system.findAll({
+    where: {
+	  name: ehrObject.name,
+	  cost: {
+	    $lte: ehrObject.cost
+	  },
+	}			
+	}).then(function(p) {
+		res.render('system/results-ehr', {systems: p});
+	}, function(err){
+		console.log(err);
+		res.status(500);
+		res.render('system/search-ehr');
+	})
+  });
+  
+router.post('/results-ehr', auth, function(req, res) {
+  var ehrObject = {};
+  ehrObject.name = req.body.systemname;
+  ehrObject.cost = req.body.ehrcost;
+  // console.log(req.session);
+  db.system.findAll({		
+	}).then(function(p) {
+		res.render('system/results-ehr', {systems: p});
+	}, function(err){
+		console.log(err);
+		res.status(500);
+		res.render('home');
+	})
+  });
 
 
 module.exports = router;

@@ -11,7 +11,7 @@ var providerRoutes = require('./routes/provider');
 // var models = require('./models/models');
 var db = require('./db');
 
-app.set('port', 8000);
+app.set('port', 5000);
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + "/public"));

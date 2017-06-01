@@ -1,1 +1,9 @@
 {{>header}}
+
+{{#if providerID}}
+	<div class="col-md-6 col-md-offset-3">
+          <form action="/system/results-ehr" method="post">
+              <button type="submit" class="btn btn-primary">Display all EHR Systems</button>
+          </form>
+        </div>
+{{/if}}

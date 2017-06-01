@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../db');
+var auth = require('../middleware');
 
 router.get('/', function(req, res){
     res.send('provider');
@@ -97,7 +98,7 @@ router.post('/register', function(req, res){
     }
 });
 
-router.get('/profile', function(req, res) {
+router.get('/profile', auth, function(req, res) {
   res.render('provider/profile');
 })
 

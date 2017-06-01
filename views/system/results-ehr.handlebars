@@ -1,0 +1,13 @@
+{{>header}}
+
+<div class="container">
+    <div class="row">
+	
+		{{#each systems}}
+			<hr>
+			<strong>EHR Name:</strong><p>{{ this.name }}</p>
+			<strong>Cost:</strong><p>{{ this.cost }}</p>
+		{{/each}}
+		
+    </div>
+</div>
