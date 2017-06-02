@@ -85,7 +85,6 @@ router.post('/register', function(req, res){
         res.render('provider/register', {errorMsg: msg});
     } else {
         db.provider.create(provider).then(function(p){
-            console.log(p.id);
             req.session.providerID = p.id;
             res.redirect('/');
         }, function(err){
@@ -98,7 +97,7 @@ router.post('/register', function(req, res){
     }
 });
 
-router.get('/profile', auth, function(req, res) {
+router.get('/profile', auth.isProvider, function(req, res) {
   res.render('provider/profile');
 })
 

@@ -15,15 +15,15 @@ router.get('/', function(req, res){
     res.send("Systems: " + system);
 });
 
-router.get('/new-ehr', auth,  function(req, res) {
+router.get('/new-ehr', auth.isProvider,  function(req, res) {
   res.render('system/new-ehr');
 });
 
-router.get('/search-ehr', auth,  function(req, res) {
+router.get('/search-ehr', auth.isProvider,  function(req, res) {
   res.render('system/search-ehr');
 });
 
-router.post('/new-ehr', auth, function(req, res) {
+router.post('/new-ehr', auth.isProvider, function(req, res) {
   var newEhrObject = {};
   newEhrObject.name = req.body.systemname;
   newEhrObject.cost = req.body.ehrcost;
@@ -49,7 +49,7 @@ router.post('/new-ehr', auth, function(req, res) {
   });
 });
 
-router.post('/search-ehr', auth, function(req, res) {
+router.post('/search-ehr', auth.isProvider, function(req, res) {
   var ehrObject = {};
   ehrObject.name = req.body.systemname;
   ehrObject.cost = req.body.ehrcost;
@@ -70,7 +70,7 @@ router.post('/search-ehr', auth, function(req, res) {
 	})
   });
   
-router.post('/results-ehr', auth, function(req, res) {
+router.post('/results-ehr', auth.isProvider, function(req, res) {
   var ehrObject = {};
   ehrObject.name = req.body.systemname;
   ehrObject.cost = req.body.ehrcost;

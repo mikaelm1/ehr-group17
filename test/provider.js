@@ -113,8 +113,8 @@ describe('GET /', function(){
         it('respond without error', function(done){
             request(app)
                 .post('/provider/login')
-                .send({email: 'example@yahoo.com', password: 'pass'})
-                .expect(302)
+                .send({email: 'example@yahoo.com'})
+                .expect(400)
                 .end(function(err, res){
                     if (err) return done(err);
                     done();
