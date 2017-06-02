@@ -10,4 +10,17 @@ var isProvider = function(req, res, next) {
     }
 }
 
-module.exports = isProvider;
+var isPatient = function(req, res, next) {
+    if (req.session.patientID || env === "test") {
+        res.locals.patientID = req.session.patientID;
+        return next();
+    }
+    else {
+      res.redirect('/');
+    }
+}
+
+module.exports = {
+    isProvider,
+    isPatient,
+};
