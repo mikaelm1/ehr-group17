@@ -70,5 +70,31 @@ describe('GET /', function(){
                 });
         });
     });
+
+    describe('POST system/new-ehr', function(){
+        it('respond without error', function(done){
+            request(app)
+                .post('/system/new-ehr')
+				.send({systemname: "Google", ehrcost: 500})
+                .expect(302)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    describe('POST system/results-ehr', function(){
+        it('respond without error', function(done){
+            request(app)
+                .post('/system/search-ehr')
+                .send({})
+                .expect(200)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
 	
 });

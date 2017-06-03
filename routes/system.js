@@ -94,12 +94,22 @@ router.post('/search-ehr', auth.isProvider, function(req, res) {
   // console.log(req.session);
   db.system.findAll({
     where: {
-	  name: ehrObject.name,
-	  cost: {
-	    $lte: ehrObject.cost
-	  },
-	}			
-	}).then(function(p) {
+      name: ehrObject.name
+	},
+  include: [db.cost],			
+  }).then(function(p) {
+    console.log("P: " + p.costs);
+    for (var i=0; i<p.length; i++) {
+        console.log('INside for loop: ' + i);
+        var total = 0;
+        for (var j=0; j<p[i].costs.length; j++) {
+          if (p[i].costs[j].systemId === p[i].id) {
+            total += p[i].costs[j].systemCost;
+          }
+        }      
+        p[i].cost = total / p[i].costs.length;
+        console.log("Cost: " + p[i].cost);
+      }
 		res.render('system/results-ehr', {systems: p});
 	}, function(err){
 		console.log(err);
@@ -109,9 +119,9 @@ router.post('/search-ehr', auth.isProvider, function(req, res) {
   });
   
 router.post('/results-ehr', auth.isProvider, function(req, res) {
-  var ehrObject = {};
-  ehrObject.name = req.body.systemname;
-  ehrObject.cost = req.body.ehrcost;
+  // var ehrObject = {};
+  // ehrObject.name = req.body.systemname;
+  // ehrObject.cost = req.body.ehrcost;
   // console.log(req.session);
   db.system.findAll({
     include: [db.cost]
