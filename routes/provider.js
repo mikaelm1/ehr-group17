@@ -35,7 +35,7 @@ router.post('/login', function(req, res){
             }
         }).then(function(u){
             req.session.providerID = u.id;
-            res.redirect('/');
+            res.redirect('/provider/profile');
         }, function(err) {
             console.log(err);
             res.status(404)
@@ -98,8 +98,18 @@ router.post('/register', function(req, res){
 });
 
 router.get('/profile', auth.isProvider, function(req, res) {
-  res.render('provider/profile');
-})
+    db.provider.findOne({
+        where: {
+            id: req.session.providerID
+        }
+    }).then(function(p){
+        res.render('provider/profile', {provider: p});
+    }, function(err){
+        console.log(err);
+        res.status(500);
+        res.render('provider/profile');
+    })
+});
 
 
 module.exports = router;

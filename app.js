@@ -57,6 +57,10 @@ db.sequelize.sync({
         lastName: 'bob',
         password: 'pass',
     }
+    var s = {name: 'google'};
+    var s2 = {name: 'apple'};
+    var cost = {systemCost: 100};
+    var cost2 = {systemCost: 123};
 	app.listen(app.get('port'), function(){
         db.provider.create(p).then(function(p){
             console.log('admin created');
@@ -68,6 +72,24 @@ db.sequelize.sync({
         }, function(err){
             console.log(err);
         })
+        db.system.create(s).then(function(s){
+            db.cost.create(cost).then(function(cost){
+                return s.setCosts([cost]).then(function(cost){
+                    console.log('system created');
+                }, function(err){
+                    console.log(err);
+                });
+            });
+        });
+        db.system.create(s2).then(function(s2){
+            db.cost.create(cost2).then(function(cost2){
+                return s2.setCosts([cost2]).then(function(cost2){
+                    console.log('system2 created');
+                }, function(err){
+                    console.log(err);
+                });
+            });
+        });
         console.log("Server started on port " + app.get('port'));
         console.log("Press Ctrl-C to terminate");
     });

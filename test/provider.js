@@ -2,7 +2,7 @@ var request = require('supertest');
 var app = require('../app');
 var db = require('../db');
 
-describe('GET /', function(){
+describe('Provider /', function(){
     before(function () {
         return db.sequelize.sync();
     });
@@ -115,6 +115,18 @@ describe('GET /', function(){
                 .post('/provider/login')
                 .send({email: 'example@yahoo.com'})
                 .expect(400)
+                .end(function(err, res){
+                    if (err) return done(err);
+                    done();
+                });
+        });
+    });
+
+    describe('GET /provide/profile', function(){
+        it('respond without error', function(done){
+            request(app)
+                .get('/provider/profile')
+                .expect(200)
                 .end(function(err, res){
                     if (err) return done(err);
                     done();

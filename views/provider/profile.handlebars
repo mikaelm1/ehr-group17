@@ -2,8 +2,12 @@
 
 <div class="container">
     <div class="row">
-        <div class='col-md-4'>Name</div>
-        <div class='col-md-4'>Create EHR</div>
-        <div class='col-md-4'>Current EHR</div>
+         <div class="panel-body text-left">
+            <hr>
+            <strong>First Name:</strong> <p>{{ provider.firstName }}</p>
+            <strong>Last Name:</strong> <p>{{ provider.lastName }}</p>
+            <strong>Employer:</strong> <p>{{ provider.employer }}</p>
+            <strong>Email:</strong> <p>{{ provider.email }}</p>
+        </div>
     </div>
 </div>
