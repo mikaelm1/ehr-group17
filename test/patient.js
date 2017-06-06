@@ -33,7 +33,7 @@ describe('Patient /', function(){
     });
 
     describe('POST /patient/register', function(){
-        it('respond with error status', function(done){
+        it('respond with redirect', function(done){
             request(app)
                 .post('/patient/register')
                 .send({email: 'test@example.com', password: 'pass', first: 'test', last: 'pass'})
@@ -58,7 +58,7 @@ describe('Patient /', function(){
     });
 
     describe('POST /provide/login', function(){
-        it('respond without error', function(done){
+        it('respond with error', function(done){
             request(app)
                 .post('/patient/login')
                 .expect(400)
@@ -70,7 +70,7 @@ describe('Patient /', function(){
     });
 
     describe('POST /patient/login', function(){
-        it('respond without error', function(done){
+        it('respond with redirect', function(done){
             request(app)
                 .post('/patient/login')
                 .send({email: 'test@example.com', password: 'pass'})

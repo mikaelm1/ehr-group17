@@ -98,7 +98,7 @@ describe('Provider /', function(){
     });
 
     describe('POST /provide/login', function(){
-        it('respond without error', function(done){
+        it('respond with error', function(done){
             request(app)
                 .post('/provider/login')
                 .expect(400)
@@ -110,7 +110,7 @@ describe('Provider /', function(){
     });
 
     describe('POST /provide/login', function(){
-        it('respond without error', function(done){
+        it('respond with error', function(done){
             request(app)
                 .post('/provider/login')
                 .send({email: 'example@yahoo.com'})
